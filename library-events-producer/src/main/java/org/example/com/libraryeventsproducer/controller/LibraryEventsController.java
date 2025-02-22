@@ -1,5 +1,7 @@
 package org.example.com.libraryeventsproducer.controller;
 
+import java.util.concurrent.ExecutionException;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.com.libraryeventsproducer.domain.LibraryEvent;
@@ -22,10 +24,13 @@ public class LibraryEventsController {
     @PostMapping("/v1/libraryevent")
     public ResponseEntity<LibraryEvent> postLibraryEvent(
         @RequestBody LibraryEvent libraryEvent
-    ) throws JsonProcessingException {
+    ) throws JsonProcessingException, ExecutionException, InterruptedException {
         log.info("libraryEvent: {}", libraryEvent);
         // invoke the kafka producer
-        libraryEventsProducer.sendLibraryEvent(libraryEvent);
+        //libraryEventsProducer.sendLibraryEvent(libraryEvent);
+        //libraryEventsProducer.sendLibraryEventApproachTwo(libraryEvent);
+        //libraryEventsProducer.sendLibraryEventApproach3(libraryEvent);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }
 }
