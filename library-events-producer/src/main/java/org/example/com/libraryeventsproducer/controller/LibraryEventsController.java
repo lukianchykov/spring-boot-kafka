@@ -27,10 +27,9 @@ public class LibraryEventsController {
     ) throws JsonProcessingException, ExecutionException, InterruptedException {
         log.info("libraryEvent: {}", libraryEvent);
         // invoke the kafka producer
-        //libraryEventsProducer.sendLibraryEvent(libraryEvent);
+        libraryEventsProducer.sendLibraryEvent(libraryEvent);
         //libraryEventsProducer.sendLibraryEventApproachTwo(libraryEvent);
         //libraryEventsProducer.sendLibraryEventApproach3(libraryEvent);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }
 }
