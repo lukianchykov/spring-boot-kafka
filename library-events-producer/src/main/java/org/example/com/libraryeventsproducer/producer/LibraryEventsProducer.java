@@ -56,7 +56,7 @@ public class LibraryEventsProducer {
         return sendResult;
     }
 
-    public CompletableFuture<SendResult<Integer, String>> sendLibraryEventApproach3(LibraryEvent libraryEvent) throws JsonProcessingException {
+    public CompletableFuture<SendResult<Integer, String>> sendLibraryEventApproachThree(LibraryEvent libraryEvent) throws JsonProcessingException {
         var key = libraryEvent.libraryEventId();
         var value = objectMapper.writeValueAsString(libraryEvent);
         String topic = "library-events";
