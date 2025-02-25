@@ -6,6 +6,8 @@
       <list>
         <option value="$PROJECT_DIR$/spring-boot-kafka-application/pom.xml" />
         <option value="$PROJECT_DIR$/library-events-producer/pom.xml" />
+        <option value="$PROJECT_DIR$/library-events-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/library-events-producer/library-event-consumer/pom.xml" />
       </list>
     </option>
   </component>
