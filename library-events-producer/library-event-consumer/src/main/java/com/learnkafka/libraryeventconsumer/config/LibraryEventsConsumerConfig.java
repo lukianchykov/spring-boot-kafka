@@ -2,8 +2,10 @@ package com.learnkafka.libraryeventconsumer.config;
 
 import java.util.List;
 
+import com.learnkafka.libraryeventconsumer.service.FailureService;
 import com.learnkafka.libraryeventconsumer.service.LibraryEventsService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.TopicPartition;
 
 import org.springframework.beans.factory.ObjectProvider;
@@ -34,6 +36,7 @@ public class LibraryEventsConsumerConfig {
     public static final String RETRY = "RETRY";
     public static final String SUCCESS = "SUCCESS";
     public static final String DEAD = "DEAD";
+
     @Autowired
     LibraryEventsService libraryEventsService;
 
@@ -42,6 +45,9 @@ public class LibraryEventsConsumerConfig {
 
     @Autowired
     KafkaTemplate kafkaTemplate;
+
+    @Autowired
+    FailureService failureService;
 
     @Value("${topics.retry:library-events.RETRY}")
     private String retryTopic;
@@ -72,10 +78,11 @@ public class LibraryEventsConsumerConfig {
         if (exception.getCause() instanceof RecoverableDataAccessException) {
             log.info("Inside the recoverable logic");
             //Add any Recovery Code here.
-            //failureService.saveFailedRecord((ConsumerRecord<Integer, String>) record, exception, RETRY);
+            failureService.saveFailedRecord((ConsumerRecord<Integer, String>) record, exception, RETRY);
 
         } else {
             log.info("Inside the non recoverable logic and skipping the record : {}", record);
+            failureService.saveFailedRecord((ConsumerRecord<Integer, String>) record, exception, DEAD);
 
         }
     };
